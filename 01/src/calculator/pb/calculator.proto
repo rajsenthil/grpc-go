@@ -1,0 +1,22 @@
+syntax = "proto3";
+package calc;
+
+option go_package = "./calc";
+
+message Calc {
+  int32 first_number = 1;
+  int32 second_number = 2;
+}
+
+message CalcRequest {
+  Calc calc = 1;
+}
+
+message CalcResponse {
+  int32 sum = 1;
+}
+
+service Calculator {
+  // unary
+  rpc sum(CalcRequest) returns (CalcResponse){}; 
+}
