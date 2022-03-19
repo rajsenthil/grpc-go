@@ -6,6 +6,7 @@ import (
 	"net"
 	"time"
 
+	"github.com/golang/protobuf/ptypes/empty"
 	"google.golang.org/grpc"
 	fibonocci "home.com/udemy/grpc/fibonocci/pb"
 )
@@ -14,7 +15,19 @@ type server struct {
 	fibonocci.FibonocciServiceServer
 }
 
-func (*server) Fibonocci(req *fibonocci.FibonocciRequest, stream fibonocci.FibonocciService_FibonocciServer) error {
+// func (*server) Fibonocci(req *fibonocci.FibonocciRequest, stream fibonocci.FibonocciService_FibonocciServer) error {
+// 	log.Printf("***Fibonocci streaming started***")
+
+// 	for i := 0; i < 10; i++ {
+// 		res := &fibonocci.FibonocciResponse{Result: 1}
+// 		stream.Send(res)
+// 		time.Sleep(1000 * 1)
+// 	}
+
+// 	return nil
+// }
+
+func (*server) Fibonocci(req *empty.Empty, stream fibonocci.FibonocciService_FibonocciServer) error {
 	log.Printf("***Fibonocci streaming started***")
 
 	for i := 0; i < 10; i++ {

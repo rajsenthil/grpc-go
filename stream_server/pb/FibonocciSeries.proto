@@ -1,12 +1,8 @@
 syntax = "proto3";
-//import "google/protobuf/empty.proto";
+import "google/protobuf/empty.proto";
 package fibonocci;
 
 option go_package = "./fibonocci";
-
-message FibonocciRequest {
-
-}
 
 message FibonocciResponse {
   int32 result = 1;
@@ -14,7 +10,7 @@ message FibonocciResponse {
 
 service FibonocciService {
   // Server Streaming
-  rpc fibonocci(FibonocciRequest) returns (stream FibonocciResponse){};
+  rpc fibonocci(google.protobuf.Empty) returns (stream FibonocciResponse){};
 }
 
 // Since nothing gets returned from server we need this empty

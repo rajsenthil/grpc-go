@@ -6,6 +6,7 @@ import (
 	"io"
 	"log"
 
+	"github.com/golang/protobuf/ptypes/empty"
 	"google.golang.org/grpc"
 	fibonocci "home.com/udemy/grpc/fibonocci/pb"
 )
@@ -19,8 +20,7 @@ func main() {
 
 	defer cc.Close()
 	c := fibonocci.NewFibonocciServiceClient(cc)
-	req := &fibonocci.FibonocciRequest{}
-	res, err := c.Fibonocci(context.Background(), req)
+	res, err := c.Fibonocci(context.Background(), &empty.Empty{})
 	if err != nil {
 		log.Fatalf("Failed to get fibonocci streaming: %v", err)
 	}

@@ -8,6 +8,7 @@ package fibonocci
 
 import (
 	context "context"
+	empty "github.com/golang/protobuf/ptypes/empty"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -23,7 +24,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type FibonocciServiceClient interface {
 	// Server Streaming
-	Fibonocci(ctx context.Context, in *FibonocciRequest, opts ...grpc.CallOption) (FibonocciService_FibonocciClient, error)
+	Fibonocci(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (FibonocciService_FibonocciClient, error)
 }
 
 type fibonocciServiceClient struct {
@@ -34,7 +35,7 @@ func NewFibonocciServiceClient(cc grpc.ClientConnInterface) FibonocciServiceClie
 	return &fibonocciServiceClient{cc}
 }
 
-func (c *fibonocciServiceClient) Fibonocci(ctx context.Context, in *FibonocciRequest, opts ...grpc.CallOption) (FibonocciService_FibonocciClient, error) {
+func (c *fibonocciServiceClient) Fibonocci(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (FibonocciService_FibonocciClient, error) {
 	stream, err := c.cc.NewStream(ctx, &FibonocciService_ServiceDesc.Streams[0], "/fibonocci.FibonocciService/fibonocci", opts...)
 	if err != nil {
 		return nil, err
@@ -71,7 +72,7 @@ func (x *fibonocciServiceFibonocciClient) Recv() (*FibonocciResponse, error) {
 // for forward compatibility
 type FibonocciServiceServer interface {
 	// Server Streaming
-	Fibonocci(*FibonocciRequest, FibonocciService_FibonocciServer) error
+	Fibonocci(*empty.Empty, FibonocciService_FibonocciServer) error
 	mustEmbedUnimplementedFibonocciServiceServer()
 }
 
@@ -79,7 +80,7 @@ type FibonocciServiceServer interface {
 type UnimplementedFibonocciServiceServer struct {
 }
 
-func (UnimplementedFibonocciServiceServer) Fibonocci(*FibonocciRequest, FibonocciService_FibonocciServer) error {
+func (UnimplementedFibonocciServiceServer) Fibonocci(*empty.Empty, FibonocciService_FibonocciServer) error {
 	return status.Errorf(codes.Unimplemented, "method Fibonocci not implemented")
 }
 func (UnimplementedFibonocciServiceServer) mustEmbedUnimplementedFibonocciServiceServer() {}
@@ -96,7 +97,7 @@ func RegisterFibonocciServiceServer(s grpc.ServiceRegistrar, srv FibonocciServic
 }
 
 func _FibonocciService_Fibonocci_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(FibonocciRequest)
+	m := new(empty.Empty)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
